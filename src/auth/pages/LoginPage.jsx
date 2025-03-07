@@ -8,6 +8,7 @@ import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 import { checkingAuthentication, startGoogleSignIn } from '../../store';
 
+
 export const LoginPage = () => {
     const {email, password, onInputChange} = useForm({
         email: 'danni@gmail.com',
@@ -18,16 +19,12 @@ export const LoginPage = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
         dispatch( checkingAuthentication() );
     };
 
     const onGoogleSignIn = (e) => {
         console.log('google sign in');
-
         dispatch( startGoogleSignIn() );
-        
-        // Google sign-in logic here
     }
 
 	return (
