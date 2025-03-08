@@ -9,9 +9,9 @@ import { useForm } from '../../hooks';
 import { startCreatingUserWithEmailPassword } from '../../store';
 
 const formData = {
-    email: 'danni@gmail.com',
-    password: '123456',
-    displayName: 'Daniel',
+    email: '',
+    password: '',
+    displayName: '',
 }
 
 const formValidations = {
@@ -25,6 +25,7 @@ export const RegisterPage = () => {
     const [ formSubmited, setformSubmited ] = useState( false )
 
     const { status, errorMessage } = useSelector( state => state.auth )
+
     const isCheckingAuth = useMemo( () => status === 'checking', [ status ] )
 
     const dispatch = useDispatch()
@@ -40,7 +41,10 @@ export const RegisterPage = () => {
 
         if ( !isFormValid ) return
 
-        dispatch( startCreatingUserWithEmailPassword( formData ) )
+        console.log( formState );
+
+
+        dispatch( startCreatingUserWithEmailPassword( formState ) )
     };
 
     return (
