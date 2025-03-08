@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
@@ -23,6 +23,10 @@ const formValidations = {
 export const RegisterPage = () => {
 
     const [ formSubmited, setformSubmited ] = useState( false )
+
+    const { status, errorMessage } = useSelector( state => state.auth )
+    const isCheckingAuth = useMemo( () => status === 'checking', [ status ] )
+
     const dispatch = useDispatch()
 
     const {
@@ -87,8 +91,21 @@ export const RegisterPage = () => {
                     </Grid>
 
                     <Grid container spacing={ 2 } sx={ { mb: 2, mt: 1 } }>
+
+                        <Grid
+                            item xs={ 12 }
+                            display={ !!errorMessage ? '' : 'none' }
+                        >
+                            <Alert severity='error'>{ errorMessage }</Alert>
+                        </Grid>
+
                         <Grid item xs={ 12 }>
-                            <Button type='submit' variant='contained' fullWidth>
+                            <Button
+                                disabled={ isCheckingAuth }
+                                type='submit'
+                                variant='contained'
+                                fullWidth
+                            >
                                 Crear cuenta
                             </Button>
                         </Grid>
